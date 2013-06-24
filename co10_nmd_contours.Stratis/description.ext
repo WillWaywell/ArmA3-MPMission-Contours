@@ -1,6 +1,6 @@
 author = "Nimrod (nomandown.com)";
 onLoadName = "Contours";
-onLoadMission = "";
+onLoadMission = "MISSION DESCRIPTION";
 
 respawn = BASE;
 respawndelay = 5;
