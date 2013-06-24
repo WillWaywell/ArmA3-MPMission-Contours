@@ -28,7 +28,7 @@ class Mission
 	randomSeed=10287358;
 	class Intel
 	{
-		briefingName="COOP 10 Contours";
+		briefingName="COOP 08 Contours";
 		startWeather=0.29999998;
 		startWind=0.099999994;
 		startWaves=0.099999994;
@@ -57,7 +57,8 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={2854.7363,146.98265,3370.9077};
+					position[]={2863.043,144.60828,3384.2881};
+					azimut=180;
 					id=0;
 					side="WEST";
 					vehicle="B_Soldier_F";
