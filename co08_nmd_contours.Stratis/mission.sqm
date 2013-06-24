@@ -48,7 +48,7 @@ class Mission
 	};
 	class Groups
 	{
-		items=7;
+		items=8;
 		class Item0
 		{
 			side="WEST";
@@ -65,7 +65,7 @@ class Mission
 					player="PLAYER COMMANDER";
 					leader=1;
 					skill=0.60000002;
-					init="[ this, ( ( typeOf this ) call NMD_fnc_getLoadout ), true ] call NMD_fnc_setLoadout; this moveInCargo NMD_insertionChopper_1;";
+					init="NMD_group_1 = group this; NMD_group_1 setGroupId [ ""Alpha"" ]; this allowFleeing 0; if ( alive NMD_lzInsertion_1 ) then { this assignAsCargo NMD_insertionChopper_1; this moveInCargo [ NMD_insertionChopper_1, 0 ]; }; [ this, ( ( typeOf this ) call NMD_fnc_getLoadout ), true ] call NMD_fnc_setLoadout;";
 				};
 			};
 		};
@@ -183,14 +183,33 @@ class Mission
 				};
 			};
 		};
+		class Item7
+		{
+			side="WEST";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={2878.5942,144.24884,3395.2573};
+					azimut=180;
+					id=7;
+					side="WEST";
+					vehicle="B_Soldier_SL_F";
+					leader=1;
+					skill=0.60000002;
+					init="NMD_group_2 = group this; NMD_group_2 setGroupId [ ""Bravo"" ]; NMD_group_2 allowFleeing 0; { _x assignAsCargo NMD_insertionChopper_2; _x moveInCargo NMD_insertionChopper_2; [ _x, ( ( typeOf _x ) call NMD_fnc_getLoadout ), true ] call NMD_fnc_setLoadout; } forEach units NMD_group_2;";
+				};
+			};
+		};
 	};
 	class Vehicles
 	{
-		items=6;
+		items=7;
 		class Item0
 		{
 			position[]={2874.9287,143.50327,3384.6021};
-			id=7;
+			id=8;
 			side="EMPTY";
 			vehicle="Land_HelipadEmpty_F";
 			leader=1;
@@ -200,7 +219,7 @@ class Mission
 		class Item1
 		{
 			position[]={2787.9263,148.8195,3397.1353};
-			id=8;
+			id=9;
 			side="EMPTY";
 			vehicle="Land_HelipadEmpty_F";
 			leader=1;
@@ -211,7 +230,7 @@ class Mission
 		{
 			position[]={2279.2864,24.090265,3672.106};
 			azimut=40.777672;
-			id=9;
+			id=10;
 			side="EMPTY";
 			vehicle="O_MRAP_02_hmg_F";
 			skill=0.60000002;
@@ -221,7 +240,7 @@ class Mission
 		{
 			position[]={2429.4468,26.659798,3727.8901};
 			azimut=131.03799;
-			id=10;
+			id=11;
 			side="EMPTY";
 			vehicle="B_APC_Wheeled_01_cannon_F";
 			skill=0.60000002;
@@ -230,7 +249,7 @@ class Mission
 		class Item4
 		{
 			position[]={1971.3279,2.1748352,3507.7002};
-			id=11;
+			id=12;
 			side="EMPTY";
 			vehicle="test_EmptyObjectForSmoke";
 			leader=1;
@@ -239,11 +258,21 @@ class Mission
 		class Item5
 		{
 			position[]={1994.5378,2.8122985,3537.9634};
-			id=12;
+			id=13;
 			side="EMPTY";
 			vehicle="test_EmptyObjectForSmoke";
 			leader=1;
 			skill=0.60000002;
+		};
+		class Item6
+		{
+			position[]={3422.5256,125.42036,3856.9902};
+			azimut=87.491203;
+			id=14;
+			side="EMPTY";
+			vehicle="O_MRAP_02_hmg_F";
+			skill=0.60000002;
+			init="this setDamage 1";
 		};
 	};
 	class Markers
