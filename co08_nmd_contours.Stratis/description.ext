@@ -14,3 +14,6 @@ class Header
 	minPlayers = 1;
 	maxPlayers = 8;
 };
+
+#include "nmd\include.hpp"
+#include "missionLoadouts.hpp"

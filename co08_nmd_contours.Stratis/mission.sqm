@@ -65,7 +65,7 @@ class Mission
 					player="PLAYER COMMANDER";
 					leader=1;
 					skill=0.60000002;
-					init="this moveInCargo NMD_insertionChopper_1";
+					init="[ this, ( ( typeOf this ) call NMD_fnc_getLoadout ), true ] call NMD_fnc_setLoadout; this moveInCargo NMD_insertionChopper_1;";
 				};
 			};
 		};
@@ -142,7 +142,7 @@ class Mission
 					vehicle="O_soldier_M_F";
 					leader=1;
 					skill=0.60000002;
-					init="this setPos [ ( getPos this select 0 ), ( getPos this select 1 ), 3.3 ];";
+					init="this setPosATL [ ( getPos this select 0 ), ( getPos this select 1 ), 3.3 ];";
 				};
 			};
 		};
@@ -154,14 +154,14 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={3286.345,227.53104,2973.2314};
-					azimut=-14.34951;
+					position[]={3286.3455,227.53101,2972.9907};
+					azimut=-14.3495;
 					id=5;
 					side="EAST";
 					vehicle="O_soldier_M_F";
 					leader=1;
 					skill=0.60000002;
-					init="this setPos [ ( getPos this select 0 ), ( getPos this select 1 ), 3.3 ];";
+					init="this setPosATL [ ( getPos this select 0 ), ( getPos this select 1 ), 4.2 ];";
 				};
 			};
 		};
