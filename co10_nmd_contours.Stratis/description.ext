@@ -1,9 +1,17 @@
 author = "Nimrod (nomandown.com)";
-onLoadName = "";
+onLoadName = "Contours";
 onLoadMission = "";
-enableDebugConsole = 2;
 
 respawn = BASE;
 respawndelay = 5;
+
+enableDebugConsole = 2;
 disabledAI = true;
 joinUnassigned = false;
+
+class Header
+{
+	gameType = Coop;
+	minPlayers = 1;
+	maxPlayers = 10;
+};
