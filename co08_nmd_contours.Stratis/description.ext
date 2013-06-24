@@ -1,12 +1,15 @@
 author = "Nimrod (nomandown.com)";
 onLoadName = "Contours";
-onLoadMission = "";
+onLoadMission = "DESCRIPTION";
+loadScreen = "loadScreen.paa";
+
+overviewText = "DESCRIPTION";
+overviewPicture = "loadScreen.paa";
 
 respawn = 4;
 
 enableDebugConsole = 2;
-disabledAI = true;
-joinUnassigned = false;
+joinUnassigned = 0;
 
 class Header
 {
@@ -15,5 +18,4 @@ class Header
 	maxPlayers = 8;
 };
 
-#include "nmd\include.hpp"
 #include "missionLoadouts.hpp"

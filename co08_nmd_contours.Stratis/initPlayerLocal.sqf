@@ -40,7 +40,7 @@ if( time < 5 ) then {
 if( time < 30 ) then {
 
 	[] spawn {
-		playMusic [ "Track10_StageB_action", 12 ];
+		playMusic [ "Track11_StageB_stealth", 0 ];
 	}
 
 };
