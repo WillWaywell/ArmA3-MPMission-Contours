@@ -1,0 +1,40 @@
+author = "Nimrod (nomandown.com)";
+onLoadName = "Poseidon";
+onLoadMission = "Assault, capture and secure Kamino from the sea.";
+loadScreen = "loadScreen.paa";
+
+overviewText = "Assault, capture and secure Kamino from the sea";
+
+respawn = 4;
+
+enableDebugConsole = 1;
+joinUnassigned = 0;
+
+class Header
+{
+	gameType = Coop;
+	minPlayers = 1;
+	maxPlayers = 8;
+};
+
+class CfgDebriefing
+{  
+	class Fail1
+	{
+		title = "";
+		subtitle = "Unable to disarm sea mines";
+		description = "No explosives specialist was present to disarm the remaining sea mines.";
+		pictureBackground = "";
+		picture = "o_inf";
+		pictureColor[] = { 0.5, 0.0, 0.0, 1 };
+	};
+	class End1
+	{
+		title = "";
+		subtitle = "You successfully seized Kamino Base";
+		description = "You successfully captured and secured Kamino Base from opposing forces.";
+		pictureBackground = "";
+		picture = "b_inf";
+		pictureColor[] = { 0.0, 0.3, 0.6, 1 };
+	};
+};
