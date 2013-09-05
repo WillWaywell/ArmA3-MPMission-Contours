@@ -1,0 +1,18 @@
+OnLoadMission = "NMD Sandbox";
+respawn = BASE;
+respawndelay = 10;
+disabledAI = true;
+enableDebugConsole = 2;
+
+// NMD
+#include "nmd\dialogs\common.hpp"
+#include "nmd\dialogs\garage\dialog.hpp"
+
+// VAS
+#include "VAS\menu.hpp"
+
+class CfgFunctions
+{
+	#include "VAS\cfgfunctions.hpp"
+};
+
