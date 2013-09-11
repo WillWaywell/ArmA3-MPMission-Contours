@@ -1,8 +1,17 @@
-private[ "_dialog", "_ctrlType" ];
+private[ "_dialog", "_ctrlType", "_ctrlColor" ];
 disableSerialization;
 
 _dialog = findDisplay 4000;
 _ctrlType = _dialog displayCtrl 4001;
+_ctrlColor = _dialog displayCtrl 4004;
+
+_ctrlColor ctrlShow false;
+
+if( isNil "NMD_DialogGarage_Spawned" ) then {
+
+	NMD_DialogGarage_Spawned = [];
+
+};
 
 {
 

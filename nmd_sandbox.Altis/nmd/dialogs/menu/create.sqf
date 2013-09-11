@@ -1,0 +1,1 @@
+createDialog "NMD_DialogMenu";
