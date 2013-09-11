@@ -51,8 +51,8 @@ class Mission
 		year=2035;
 		month=2;
 		day=6;
-		hour=4;
-		minute=15;
+		hour=3;
+		minute=50;
 		startFogBase=0.001;
 		forecastFogBase=0.001;
 		startFogDecay=0.0049999999;

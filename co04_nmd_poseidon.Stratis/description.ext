@@ -1,21 +1,20 @@
-author = "Nimrod (nomandown.com)";
-onLoadName = "Poseidon";
-onLoadMission = "Assault, capture and secure Kamino from the sea.";
-loadScreen = "loadScreen.paa";
-
-overviewText = "Assault, capture and secure Kamino from the sea";
-
-respawn = 4;
-
-enableDebugConsole = 1;
-joinUnassigned = 0;
-
 class Header
 {
 	gameType = Coop;
 	minPlayers = 1;
 	maxPlayers = 8;
 };
+
+author = "Nimrod (nomandown.com)";
+onLoadName = "Poseidon";
+onLoadMission = "Assault, capture and secure Kamino from the sea.";
+loadScreen = "loadScreen.paa";
+overviewText = "Assault, capture and secure Kamino from the sea.";
+overviewPicture = "loadScreen.paa";
+
+respawn = 4;
+enableDebugConsole = 1;
+joinUnassigned = 0;
 
 class CfgDebriefing
 {  
