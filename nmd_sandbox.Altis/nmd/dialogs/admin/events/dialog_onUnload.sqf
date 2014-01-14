@@ -1,3 +1,0 @@
-disableSerialization;
-
-deleteMarkerLocal "NMD_DialogAdmin_SelectedPlayer";

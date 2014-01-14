@@ -1,0 +1,376 @@
+/*%FSM<COMPILE "C:\Program Files (x86)\Bohemia Interactive\Tools\FSM Editor Personal Edition\scriptedFSM.cfg, Union Wings Mission Flow">*/
+/*%FSM<HEAD>*/
+/*
+item0[] = {"Start",0,250,-25.000000,-525.000000,75.000000,-475.000000,0.000000,"Start"};
+item1[] = {"Not_server",4,218,-150.000000,-525.000000,-50.000000,-475.000000,1.000000,"Not server"};
+item2[] = {"Terminate",1,250,-275.000000,-525.000000,-175.000000,-475.000000,0.000000,"Terminate"};
+item3[] = {"Server",4,218,100.000000,-525.000000,200.000000,-475.000000,0.000000,"Server"};
+item4[] = {"Insertion",2,250,100.000000,-450.000000,200.000000,-400.000000,0.000000,"Insertion"};
+item5[] = {"Near_OP",4,218,100.000000,-75.000000,200.000000,-25.000000,0.000000,"Near OP"};
+item6[] = {"End",1,250,100.000000,150.000000,200.000000,200.000000,0.000000,"End"};
+item7[] = {"Insertion_finish",4,218,100.000000,-375.000000,200.000000,-325.000000,0.000000,"Insertion" \n "finished"};
+item8[] = {"Secure_town",2,250,100.000000,-300.000000,200.000000,-250.000000,0.000000,"Secure town"};
+item9[] = {"Defend",2,250,100.000000,0.000000,200.000000,50.000000,0.000000,"Defend"};
+item10[] = {"Attackers_dead",4,218,100.000000,75.000000,200.000000,125.000000,0.000000,"Attackers dead"};
+item11[] = {"Town_secure",4,218,100.000000,-225.000000,200.000000,-175.000000,0.000000,"Town secure"};
+item12[] = {"Move_to_OP",2,250,100.000000,-150.000000,200.000000,-100.000000,0.000000,"Move to OP"};
+link0[] = {0,1};
+link1[] = {0,3};
+link2[] = {1,2};
+link3[] = {3,4};
+link4[] = {4,7};
+link5[] = {5,9};
+link6[] = {7,8};
+link7[] = {8,11};
+link8[] = {9,10};
+link9[] = {10,6};
+link10[] = {11,12};
+link11[] = {12,5};
+globals[] = {25.000000,1,0,0,0,640,480,4,71,6316128,1,-762.692383,697.062256,585.897644,-596.429138,964,951,1};
+window[] = {0,-1,-1,-1,-1,1279,182,1793,182,1,982};
+*//*%FSM</HEAD>*/
+class FSM
+{
+  fsmName = "Union Wings Mission Flow";
+  class States
+  {
+    /*%FSM<STATE "Start">*/
+    class Start
+    {
+      name = "Start";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Not_server">*/
+        class Not_server
+        {
+          priority = 1.000000;
+          to="Terminate";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!isServer"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Server">*/
+        class Server
+        {
+          priority = 0.000000;
+          to="Insertion";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"isServer"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Terminate">*/
+    class Terminate
+    {
+      name = "Terminate";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Insertion">*/
+    class Insertion
+    {
+      name = "Insertion";
+      init = /*%FSM<STATEINIT""">*/"//--- Conversations" \n
+       "[] spawn {" \n
+       "	" \n
+       "	sleep 30;" \n
+       "	[ ""insertion"", ""BIS_fnc_missionConversations"" ] spawn BIS_fnc_MP;" \n
+       "" \n
+       "};" \n
+       "" \n
+       "//--- Task" \n
+       """secureTown"" call BIS_fnc_missionTasks;" \n
+       "" \n
+       "//--- Insertion chopper" \n
+       "private [""_chopper"", ""_lz"", ""_end""];" \n
+       "_chopper = NMD_insertionChopper;" \n
+       "_lz = position NMD_lzInsertion;" \n
+       "_end = getMarkerPos ""NMD_insertionChopperExit"";" \n
+       "" \n
+       "//--- Group AI stuff" \n
+       "NMD_group allowFleeing 0;" \n
+       "" \n
+       "//--- Chopper AI stuff" \n
+       "_chopper disableAi ""TARGET"";" \n
+       "_chopper disableAi ""AUTOTARGET"";" \n
+       "_chopper setCaptive true;" \n
+       "_chopper allowFleeing 0;" \n
+       "_chopper lock true;" \n
+       "" \n
+       "//--- Height of flight" \n
+       "_chopper flyInHeight 25;" \n
+       "" \n
+       "//Remove stuff from chopper cargo" \n
+       "clearItemCargoGlobal _chopper;" \n
+       "clearMagazineCargoGlobal _chopper;" \n
+       "clearWeaponCargoGlobal _chopper;" \n
+       "clearBackpackCargoGlobal _chopper;" \n
+       "" \n
+       "//--- Move to LZ and land waypoint" \n
+       "private ""_wp1"";" \n
+       "_wp1 = group _chopper addWaypoint [ _lz, 0 ];" \n
+       "_wp1 setWaypointType ""MOVE"";" \n
+       "_wp1 setWaypointStatements [ ""true"", ""vehicle this land 'GET OUT'; doGetOut ( units NMD_group ); vehicle this spawn { waitUntil { isTouchingGround _this }; sleep 2; _this lock false; };"" ];" \n
+       "_wp1 showWaypoint ""NEVER"";" \n
+       "" \n
+       "//--- Unload troops waypoint" \n
+       "private ""_wp2"";" \n
+       "_wp2 = group _chopper addWaypoint [ _lz, 0 ];" \n
+       "_wp2 setWaypointType ""TR UNLOAD"";" \n
+       "_wp2 setWaypointStatements [ ""count assignedCargo this == 0"", ""if ( alive NMD_lzInsertion ) then { NMD_lzInsertion setDamage 1; }; vehicle this lock true;"" ];" \n
+       "_wp2 showWaypoint ""NEVER"";" \n
+       "" \n
+       "//--- Move away and delete waypoint" \n
+       "private ""_wp3"";" \n
+       "_wp3 = group _chopper addWaypoint [ _end, 0 ];" \n
+       "_wp3 setWaypointType ""MOVE"";" \n
+       "_wp3 setWaypointStatements [ ""true"", ""_chopper = vehicle this; _group = group this; { deleteVehicle _x; } forEach units _group; deleteVehicle _chopper; deleteGroup _group;"" ];" \n
+       "_wp3 showWaypoint ""NEVER"";" \n
+       "" \n
+       "//--- Open chopper doors" \n
+       "[] spawn {" \n
+       "" \n
+       "	sleep 30;" \n
+       "	NMD_insertionChopper animateDoor [ ""Door_L"", 1 ];" \n
+       "	sleep 2.5;" \n
+       "	NMD_insertionChopper animateDoor [""Door_R"", 1];" \n
+       "" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Insertion_finish">*/
+        class Insertion_finish
+        {
+          priority = 0.000000;
+          to="Secure_town";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!alive NMD_lzInsertion"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "End">*/
+    class End
+    {
+      name = "End";
+      init = /*%FSM<STATEINIT""">*/"[] spawn {" \n
+       "	" \n
+       "	//--- Task complete" \n
+       "	sleep 14;" \n
+       "	[ ""defend"", ""Succeeded"" ] call BIS_fnc_missionTasks;" \n
+       "" \n
+       "	//--- Conversations" \n
+       "	sleep 4;" \n
+       "	[ ""end"", ""BIS_fnc_missionConversations"" ] spawn BIS_fnc_MP;" \n
+       "" \n
+       "	//--- End mission" \n
+       "	sleep 15;" \n
+       "	[ [ ""End1"" ], ""BIS_fnc_endMission"", nil, true ] call BIS_fnc_MP;" \n
+       "" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Secure_town">*/
+    class Secure_town
+    {
+      name = "Secure_town";
+      init = /*%FSM<STATEINIT""">*/"//--- Set current task" \n
+       """secureTown"" call BIS_fnc_taskSetCurrent;" \n
+       "" \n
+       "//--- Conversations" \n
+       "[ ""landingZone"", ""BIS_fnc_missionConversations"" ] spawn BIS_fnc_MP;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Town_secure">*/
+        class Town_secure
+        {
+          priority = 0.000000;
+          to="Move_to_OP";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"triggerActivated NMD_secureTownTrig"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Defend">*/
+    class Defend
+    {
+      name = "Defend";
+      init = /*%FSM<STATEINIT""">*/"//--- Task complete" \n
+       "[ ""moveToOP"", ""Succeeded"" ] call BIS_fnc_missionTasks;" \n
+       "" \n
+       "//--- New task" \n
+       """defend"" call BIS_fnc_missionTasks;" \n
+       "" \n
+       "//--- Conversations" \n
+       "[ ""defend"", ""BIS_fnc_missionConversations"" ] spawn BIS_fnc_MP;" \n
+       "" \n
+       "[] spawn {" \n
+       "" \n
+       "	sleep 5;" \n
+       "" \n
+       "	//--- Play music" \n
+       "	[ [ 0, 0.5 ], ""NMD_fnc_fadeMusic"" ] spawn BIS_fnc_MP;" \n
+       "	[ ""LeadTrack03_F_EPA"", ""NMD_fnc_playMusic"" ] spawn BIS_fnc_MP;" \n
+       "" \n
+       "	sleep 10;" \n
+       "" \n
+       "	//--- Unhide plane" \n
+       "	[ [ NMD_plane, false ], ""NMD_fnc_suspend"" ] spawn BIS_fnc_MP;" \n
+       "" \n
+       "};" \n
+       "" \n
+       "//--- Spawn reinforcements" \n
+       "_reinforceInf = [];" \n
+       "_reinforceVeh = [];" \n
+       "" \n
+       "//--- Infantry" \n
+       "{" \n
+       "	" \n
+       "	private [ ""_class"", ""_start"", ""_end"", ""_groupCfg"", ""_group"" ];" \n
+       "" \n
+       "	_class = ( _x select 0 );" \n
+       "	_start = ( _x select 1 );" \n
+       "	_end = ( _x select 2 );" \n
+       "	_groupCfg = ( configfile >> ""CfgGroups"" >> ""Indep"" >> ""IND_F"" >> ""Infantry"" >> _class );" \n
+       "" \n
+       "	//--- Spawn group" \n
+       "	_group = [ _start, INDEPENDENT, _groupCfg, nil, nil, [ 0.4, 0.9 ] ] call BIS_fnc_spawnGroup;" \n
+       "" \n
+       "	//--- Disable fleeing" \n
+       "	_group allowFleeing 0;" \n
+       "" \n
+       "	//--- Add waypoint" \n
+       "	private ""_wp"";" \n
+       "	_wp = _group addWaypoint [ _end, 70 ];" \n
+       "	_wp setWaypointType ""MOVE"";" \n
+       "	_wp setWaypointFormation ""WEDGE"";" \n
+       "	_wp setWaypointSpeed ""FULL"";" \n
+       "	_wp setWaypointCombatMode ""YELLOW"";" \n
+       "	_wp setWaypointbehaviour ""AWARE"";" \n
+       "" \n
+       "	//--- Store troops" \n
+       "	[ _reinforceInf, ( units _group ) ] call BIS_fnc_arrayPushStack;" \n
+       "" \n
+       "} forEach [" \n
+       "" \n
+       "	[ ""HAF_InfTeam"", getMarkerPos ""NMD_troopReinforcements_1"", position NMD_nearOPTrig ]," \n
+       "	[ ""HAF_InfSquad"", getMarkerPos ""NMD_troopReinforcements_2"", position NMD_nearOPTrig ]," \n
+       "	[ ""HAF_InfTeam"", getMarkerPos ""NMD_troopReinforcements_3"", position NMD_nearOPTrig ]" \n
+       "" \n
+       "];" \n
+       "" \n
+       "//--- Vehicles" \n
+       "{" \n
+       "	" \n
+       "	private [ ""_class"", ""_dir"", ""_start"", ""_end"", ""_container"", ""_vehicle"", ""_group"" ];" \n
+       "" \n
+       "	_class = ( _x select 0 );" \n
+       "	_start = getMarkerPos ( _x select 1 );" \n
+       "	_end = ( _x select 2 );" \n
+       "	_dir = markerDir ( _x select 1 );" \n
+       "" \n
+       "	//--- Spawn vehicle" \n
+       "	_container = [ _start , _dir, _class, INDEPENDENT ] call BIS_fnc_spawnVehicle;" \n
+       "	_vehicle = ( _container select 0 );" \n
+       "	_group = ( _container select 2 );" \n
+       "" \n
+       "	//--- Disable fleeing" \n
+       "	_group allowFleeing 0;" \n
+       "" \n
+       "	//--- Add waypoint" \n
+       "	private ""_wp"";" \n
+       "	_wp = _group addWaypoint [ _end, 70 ];" \n
+       "	_wp setWaypointSpeed ""NORMAL"";" \n
+       "	_wp setWaypointType ""SAD"";" \n
+       "" \n
+       "	//--- Store vehicle" \n
+       "	_reinforceVeh set [ count _reinforceVeh, _vehicle ];" \n
+       "" \n
+       "} forEach [" \n
+       "" \n
+       "	[ ""I_APC_Wheeled_03_cannon_F"", ""NMD_vehicleReinforcements_1"", position NMD_nearOPTrig ]," \n
+       "	[ ""I_MRAP_03_gmg_F"", ""NMD_vehicleReinforcements_2"", position NMD_nearOPTrig ]" \n
+       "" \n
+       "];"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Attackers_dead">*/
+        class Attackers_dead
+        {
+          priority = 0.000000;
+          to="End";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"{ alive _x && canMove _x && !fleeing _x } count _reinforceVeh == 0" \n
+           "&&" \n
+           "{ alive _x && !fleeing _x } count _reinforceInf < 1"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Move_to_OP">*/
+    class Move_to_OP
+    {
+      name = "Move_to_OP";
+      init = /*%FSM<STATEINIT""">*/"//--- Task complete" \n
+       "[ ""secureTown"", ""Succeeded"" ] call BIS_fnc_missionTasks;" \n
+       "" \n
+       "[] spawn {" \n
+       "	" \n
+       "	sleep 4;" \n
+       "" \n
+       "	//--- Conversations" \n
+       "	[ ""townSecure"", ""BIS_fnc_missionConversations"" ] spawn BIS_fnc_MP;" \n
+       "" \n
+       "	//--- Task" \n
+       "	""moveToOP"" call BIS_fnc_missionTasks;" \n
+       "" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Near_OP">*/
+        class Near_OP
+        {
+          priority = 0.000000;
+          to="Defend";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"triggerActivated NMD_nearOPTrig"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+  };
+  initState="Start";
+  finalStates[] =
+  {
+    "Terminate",
+    "End",
+  };
+};
+/*%FSM</COMPILE>*/

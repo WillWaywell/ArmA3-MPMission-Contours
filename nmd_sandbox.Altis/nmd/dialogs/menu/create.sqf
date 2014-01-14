@@ -1,1 +1,0 @@
-createDialog "NMD_DialogMenu";

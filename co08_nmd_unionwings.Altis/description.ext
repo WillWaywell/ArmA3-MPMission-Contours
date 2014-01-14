@@ -1,0 +1,49 @@
+class Header
+{
+	gameType = Coop;
+	minPlayers = 1;
+	maxPlayers = 8;
+};
+
+author = "Nimrod";
+onLoadName = "Union Wings";
+onLoadMission = "CTRG paratroopers must secure the town of Galati and assess the status of the suspected to be overrun, NATO observation post.";
+loadScreen = "loadScreen.paa";
+onLoadMissionTime = 1;
+
+respawn = 4;
+enableDebugConsole = 1;
+joinUnassigned = 0;
+
+class CfgFunctions
+{
+	class NMD
+	{
+		class groups
+		{
+			class selectLeader;
+		};
+		class music
+		{
+			class fadeMusic;
+			class playMusic;
+		};
+		class units
+		{
+			class setupCTRG;
+			class suspend;
+		};
+	};
+};
+
+class CfgDebriefing
+{  
+	class End1
+	{
+		subtitle = "Delta secured Galati";
+		description = "Delta successfully secured Galati town and observation post from AAF forces.";
+		pictureBackground = "loadScreen.paa";
+		picture = "b_inf";
+		pictureColor[] = { 0.0, 0.3, 0.6, 1 };
+	};
+};
